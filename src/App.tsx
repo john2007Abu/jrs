@@ -208,7 +208,6 @@ function SilverJubileeAnnouncement() {
         <p className="text-lg sm:text-xl mb-6 font-montserrat">
           Join us as we mark <span className="font-bold text-yellow-300">25 years</span> of faith, community, and celebration at Saint George Punitha Santhiyagapar Aalayam. Stay tuned for more details on this momentous occasion!
         </p>
-        {/* Updated 25th Anniversary Logo Size */}
         <div className="mb-6">
           <img
             src={years}
@@ -216,6 +215,85 @@ function SilverJubileeAnnouncement() {
             className="mx-auto w-40 h-40 sm:w-64 sm:h-64 object-contain"
           />
         </div>
+      </div>
+    </section>
+  );
+}
+
+function FestivalRoadmap() {
+  const roadmapItems = [
+    { month: 'January', events: ['January 28 – Statue Dedication Ceremony (Blessing and unveiling of a new statue)'] },
+    { month: 'April', events: ['April 18 – Good Friday (Observing the Passion of Christ)', 'April 20 – Easter Sunday (Resurrection of Christ, special church services)'] },
+    { month: 'May', events: ['May 28 – Mother’s Birthday Flag Raising Ceremony (Honoring the birth of a motherly figure with a flag hoisting)'] },
+    { month: 'June', events: ['June 28 – Our Father’s Birthday Celebration'] },
+    { month: 'July', events: ['July 21 – Car Festival Preparation Day (Decorating the car, rituals)', 'July 22 – Car Festival (Grand procession and celebrations)'] },
+    { month: 'September', events: ['September 8 – Mother Mary’s Birthday Celebration (Special Mass, prayers, and feast)'] },
+    { month: 'October', events: ['October 24 – Blessing of the Holy Painting (Dedication and special prayers for a newly painted religious image)'] },
+    { month: 'December', events: ['December 8 – Conception of Mother Mary (Feast of the Immaculate Conception)', 'December 25 – Christmas Celebration (Nativity of Jesus, church services, and festivities)', 'December 31 – New Year’s Eve Celebration (Prayers, thanksgiving, and welcoming the new year)'] },
+  ];
+
+  // Animation variants for the futuristic effect
+  const containerVariants = {
+    hidden: { opacity: 0, y: 100 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: 0.5,
+        duration: 0.8,
+        when: "beforeChildren",
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, x: -50 },
+    visible: { opacity: 1, x: 0 },
+  };
+
+  return (
+    <section id="roadmap" className="py-12 bg-gradient-to-r from-teal-500 to-purple-700 text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        {/* Introductory sentence instead of title */}
+        <p className="text-lg sm:text-xl mb-6 font-montserrat text-teal-200">
+          Explore the key events and celebrations planned throughout the year at our church.
+        </p>
+        {/* Futuristic Animation Container */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={containerVariants}
+          className="relative overflow-hidden"
+        >
+          {/* Glowing effect before reveal */}
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-teal-600 to-purple-800 opacity-0"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.6 }}
+            transition={{ duration: 0.5, delay: 0 }}
+          />
+          {/* Roadmap Content */}
+          <div className="relative z-10">
+            {roadmapItems.map((item, index) => (
+              <motion.div
+                key={index}
+                variants={itemVariants}
+                className="mb-6 p-4 bg-white/10 rounded-lg backdrop-blur-sm"
+              >
+                <h3 className="text-xl font-semibold text-teal-200 mb-2">🗓️ {item.month}</h3>
+                <ul className="list-none space-y-2">
+                  {item.events.map((event, eventIndex) => (
+                    <li key={eventIndex} className="text-gray-100 pl-6 relative">
+                      🔹 {event}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -397,6 +475,9 @@ function App() {
           </div>
         </div>
       </section>
+
+      {/* Festival Roadmap */}
+      <FestivalRoadmap />
 
       {/* Album Slider */}
       <AlbumSlider />
