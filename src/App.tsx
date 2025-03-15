@@ -112,7 +112,7 @@ function ServiceCard({ day, time, location, service }: ServiceCardProps) {
       <Calendar className="h-8 w-8 text-blue-600 mb-4" />
       <h3 className="text-xl font-semibold mb-2">{day}</h3>
       {service && (
-        <p className="text-gray-600 mb-2">{service}</p>
+        <p className="text-gray-900 mb-2">{service}</p>
       )}
       <div className="flex items-center text-gray-600 mb-2">
         <Clock className="h-4 w-4 mr-2" />
@@ -303,19 +303,11 @@ function Loader() {
   return (
     <div className="fixed inset-0 bg-gray-900 flex items-center justify-center z-50">
       <motion.div
-        className="relative"
+        className="w-16 h-16 border-4 border-t-4 border-blue-500 border-solid rounded-full"
         animate={{ rotate: 360 }}
-        transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-      >
-        {/* Cross design */}
-        <div className="w-16 h-16 bg-white relative">
-          <div className="absolute w-2 h-16 bg-red-600 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
-          <div className="absolute w-16 h-2 bg-red-600 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
-          {/* Glow effect */}
-          <div className="absolute inset-0 bg-yellow-300 rounded-full opacity-20 blur-md animate-pulse"></div>
-        </div>
-        <p className="text-white text-lg mt-4 font-montserrat">Loading with Faith...</p>
-      </motion.div>
+        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+      ></motion.div>
+      <p className="text-white text-lg mt-4 font-montserrat">Loading...</p>
     </div>
   );
 }
