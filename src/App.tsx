@@ -506,7 +506,7 @@ function App() {
                 />
                 <ServiceCard
                   day="Wednesday"
-                  time="7:00 PM"
+                  time="10:00 AM - 3:00 PM"
                   location="Main Sanctuary"
                   service="Food Distribution"
                 />
