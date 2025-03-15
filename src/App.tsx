@@ -255,7 +255,7 @@ function FestivalRoadmap() {
   return (
     <section id="roadmap" className="py-12 bg-gradient-to-r from-teal-500 to-purple-700 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        {/* Introductory sentence instead of title */}
+        {/* Introductory sentence */}
         <p className="text-lg sm:text-xl mb-6 font-montserrat text-teal-200">
           Explore the key events and celebrations planned throughout the year at our church.
         </p>
@@ -299,217 +299,270 @@ function FestivalRoadmap() {
   );
 }
 
-function App() {
+function Loader() {
   return (
-    <div className="min-h-screen bg-gray-50 pt-16">
-      <Navbar />
-      
-      {/* Hero Section */}
-      <section id="home" className="relative h-screen">
-        <div className="absolute inset-0">
-          <img
-            src="https://images.unsplash.com/photo-1438032005730-c779502df39b?auto=format&fit=crop&q=80"
-            alt="Church Main"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black/50" />
+    <div className="fixed inset-0 bg-gray-900 flex items-center justify-center z-50">
+      <motion.div
+        className="relative"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+      >
+        {/* Cross design */}
+        <div className="w-16 h-16 bg-white relative">
+          <div className="absolute w-2 h-16 bg-red-600 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
+          <div className="absolute w-16 h-2 bg-red-600 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
+          {/* Glow effect */}
+          <div className="absolute inset-0 bg-yellow-300 rounded-full opacity-20 blur-md animate-pulse"></div>
         </div>
-        
-        <div className="relative z-20 flex items-center justify-center h-full">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            className="text-center text-white px-4"
-          >
-            <img 
-              src={logoImage}
-              alt="Church Logo"
-              className="mx-auto mb-6 w-24 h-24 sm:w-32 sm:h-32 object-contain"
-            />
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-4">Saint George Punitha Santhiyagapar Aalayam</h1>
-            <p className="text-lg sm:text-xl md:text-2xl mb-8">Join us in worship and community</p>
-            <div className="flex justify-center space-x-4 flex-col sm:flex-row">
-              <a 
-                href="https://www.youtube.com/@JohnabrakanJohnabrakan" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center bg-red-600 hover:bg-red-700 text-white px-4 py-2 sm:px-6 sm:py-3 rounded-full text-base sm:text-lg font-semibold transition-colors mb-2 sm:mb-0 sm:mr-2"
-              >
-                <Youtube className="w-5 h-5 sm:w-6 sm:h-6 mr-2" />
-                Our Channel
-              </a>
-              <a 
-                href="https://www.instagram.com/jrs_network" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 sm:px-6 sm:py-3 rounded-full text-base sm:text-lg font-semibold transition-colors"
-              >
-                <Instagram className="w-5 h-5 sm:w-6 sm:h-6 mr-2" />
-                Follow Us
-              </a>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+        <p className="text-white text-lg mt-4 font-montserrat">Loading with Faith...</p>
+      </motion.div>
+    </div>
+  );
+}
 
-      {/* Silver Jubilee Announcement */}
-      <SilverJubileeAnnouncement />
+function App() {
+  const [isLoading, setIsLoading] = useState(true);
+  const images = [logoImage, georgeImage, santiagoImage, years, img1, img2, img3, img4, img5, img6, img7, img8, img9, img10];
 
-      {/* Featured Videos - Hidden on Mobile */}
-      <section id="videos" className="py-16 bg-white hidden sm:block">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12">Featured Videos</h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="aspect-video">
-              <iframe
-                className="w-full h-full rounded-lg shadow-lg"
-                src="https://www.youtube.com/embed/12xWZR_pvxc"
-                title="Saint George Video"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            </div>
-            <div className="aspect-video">
-              <iframe
-                className="w-full h-full rounded-lg shadow-lg"
-                src="https://www.youtube.com/embed/cc5UIH7ROOs"
-                title="Santiago Video"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            </div>
-          </div>
-        </div>
-      </section>
+  useEffect(() => {
+    let loadedImages = 0;
 
-      {/* Saints Section */}
-      <section id="saints" className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12">Our Patron Saints</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-12">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="bg-white rounded-lg shadow-lg overflow-hidden"
-            >
+    const handleImageLoad = () => {
+      loadedImages += 1;
+      if (loadedImages === images.length) {
+        setIsLoading(false); // Hide loader when all images are loaded
+      }
+    };
+
+    images.forEach((img) => {
+      const image = new Image();
+      image.src = img;
+      image.onload = handleImageLoad;
+      image.onerror = handleImageLoad; // Handle errors to avoid hanging
+    });
+
+    // Fallback timeout in case of loading issues
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 10000); // 10-second fallback
+
+    return () => clearTimeout(timer);
+  }, [images]);
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {isLoading ? <Loader /> : (
+        <div className="pt-16">
+          <Navbar />
+          
+          {/* Hero Section */}
+          <section id="home" className="relative h-screen">
+            <div className="absolute inset-0">
+              <img
+                src="https://images.unsplash.com/photo-1438032005730-c779502df39b?auto=format&fit=crop&q=80"
+                alt="Church Main"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-black/50" />
+            </div>
+            
+            <div className="relative z-20 flex items-center justify-center h-full">
               <motion.div
-                whileHover={{ 
-                  scale: 1.05,
-                  transition: { duration: 0.3 }
-                }}
-                className="overflow-hidden"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1 }}
+                className="text-center text-white px-4"
               >
-                <img
-                  src={georgeImage}
-                  alt="Saint George"
-                  className="w-full h-auto object-contain hover:cursor-pointer"
+                <img 
+                  src={logoImage}
+                  alt="Church Logo"
+                  className="mx-auto mb-6 w-24 h-24 sm:w-32 sm:h-32 object-contain"
                 />
+                <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-4">Saint George Punitha Santhiyagapar Aalayam</h1>
+                <p className="text-lg sm:text-xl md:text-2xl mb-8">Join us in worship and community</p>
+                <div className="flex justify-center space-x-4 flex-col sm:flex-row">
+                  <a 
+                    href="https://www.youtube.com/@JohnabrakanJohnabrakan" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center bg-red-600 hover:bg-red-700 text-white px-4 py-2 sm:px-6 sm:py-3 rounded-full text-base sm:text-lg font-semibold transition-colors mb-2 sm:mb-0 sm:mr-2"
+                  >
+                    <Youtube className="w-5 h-5 sm:w-6 sm:h-6 mr-2" />
+                    Our Channel
+                  </a>
+                  <a 
+                    href="https://www.instagram.com/jrs_network" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 sm:px-6 sm:py-3 rounded-full text-base sm:text-lg font-semibold transition-colors"
+                  >
+                    <Instagram className="w-5 h-5 sm:w-6 sm:h-6 mr-2" />
+                    Follow Us
+                  </a>
+                </div>
               </motion.div>
-              <div className="p-6">
-                <h3 className="text-2xl font-bold mb-4">Saint George</h3>
-                <p className="text-gray-600">
-                  Saint George, the patron saint of warriors and protectors, known for his 
-                  courage and unwavering faith. His legendary battle with the dragon symbolizes 
-                  the triumph of good over evil.
-                </p>
-              </div>
-            </motion.div>
+            </div>
+          </section>
 
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="bg-white rounded-lg shadow-lg overflow-hidden"
-            >
-              <motion.div
-                whileHover={{ 
-                  scale: 1.05,
-                  transition: { duration: 0.3 }
-                }}
-                className="overflow-hidden"
-              >
-                <img
-                  src={santiagoImage}
-                  alt="Santiago"
-                  className="w-full h-auto object-contain hover:cursor-pointer"
+          {/* Silver Jubilee Announcement */}
+          <SilverJubileeAnnouncement />
+
+          {/* Featured Videos - Hidden on Mobile */}
+          <section id="videos" className="py-16 bg-white hidden sm:block">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 className="text-3xl font-bold text-center mb-12">Featured Videos</h2>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="aspect-video">
+                  <iframe
+                    className="w-full h-full rounded-lg shadow-lg"
+                    src="https://www.youtube.com/embed/12xWZR_pvxc"
+                    title="Saint George Video"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+                <div className="aspect-video">
+                  <iframe
+                    className="w-full h-full rounded-lg shadow-lg"
+                    src="https://www.youtube.com/embed/cc5UIH7ROOs"
+                    title="Santiago Video"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Saints Section */}
+          <section id="saints" className="py-16 bg-gray-50">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 className="text-3xl font-bold text-center mb-12">Our Patron Saints</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-12">
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8 }}
+                  viewport={{ once: true }}
+                  className="bg-white rounded-lg shadow-lg overflow-hidden"
+                >
+                  <motion.div
+                    whileHover={{ 
+                      scale: 1.05,
+                      transition: { duration: 0.3 }
+                    }}
+                    className="overflow-hidden"
+                  >
+                    <img
+                      src={georgeImage}
+                      alt="Saint George"
+                      className="w-full h-auto object-contain hover:cursor-pointer"
+                    />
+                  </motion.div>
+                  <div className="p-6">
+                    <h3 className="text-2xl font-bold mb-4">Saint George</h3>
+                    <p className="text-gray-600">
+                      Saint George, the patron saint of warriors and protectors, known for his 
+                      courage and unwavering faith. His legendary battle with the dragon symbolizes 
+                      the triumph of good over evil.
+                    </p>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8 }}
+                  viewport={{ once: true }}
+                  className="bg-white rounded-lg shadow-lg overflow-hidden"
+                >
+                  <motion.div
+                    whileHover={{ 
+                      scale: 1.05,
+                      transition: { duration: 0.3 }
+                    }}
+                    className="overflow-hidden"
+                  >
+                    <img
+                      src={santiagoImage}
+                      alt="Santiago"
+                      className="w-full h-auto object-contain hover:cursor-pointer"
+                    />
+                  </motion.div>
+                  <div className="p-6">
+                    <h3 className="text-2xl font-bold mb-4">Santiago (Saint James)</h3>
+                    <p className="text-gray-600">
+                      Santiago, also known as Saint James the Greater, was one of Jesus's first 
+                      disciples. He is the patron saint of pilgrims and Spain, known for his 
+                      evangelizing mission in the Iberian Peninsula.
+                    </p>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+          </section>
+
+          {/* Service Times */}
+          <section id="services" className="py-16 bg-white">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 className="text-3xl font-bold text-center mb-12">Service Times</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                <ServiceCard
+                  day="Monday - Sunday"
+                  time="9:00 AM - 9:00 PM"
+                  location="Main Sanctuary"
                 />
-              </motion.div>
-              <div className="p-6">
-                <h3 className="text-2xl font-bold mb-4">Santiago (Saint James)</h3>
-                <p className="text-gray-600">
-                  Santiago, also known as Saint James the Greater, was one of Jesus's first 
-                  disciples. He is the patron saint of pilgrims and Spain, known for his 
-                  evangelizing mission in the Iberian Peninsula.
-                </p>
+                <ServiceCard
+                  day="Wednesday"
+                  time="7:00 PM"
+                  location="Main Sanctuary"
+                  service="Food Distribution"
+                />
+                <ServiceCard
+                  day="Festival Time"
+                  time="To Be Announced"
+                  location="To Be Announced"
+                />
               </div>
-            </motion.div>
-          </div>
+            </div>
+          </section>
+
+          {/* Festival Roadmap */}
+          <FestivalRoadmap />
+
+          {/* Album Slider */}
+          <AlbumSlider />
+
+          {/* Location Section */}
+          <section id="location" className="py-16 bg-gray-50">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 className="text-3xl font-bold text-center mb-12">Find Us</h2>
+              <div className="relative w-full max-w-5xl mx-auto h-[300px] sm:h-[500px] rounded-lg overflow-hidden shadow-lg">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.833183606571!2d79.82677461482178!3d11.011883591949392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTHCsDAwJzQzLjEiTiA3OcKwNDknNDUuNiJF!5e0!3m2!1sen!2sin!4v1649713439805!5m2!1sen!2sin"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                ></iframe>
+              </div>
+              <div className="mt-6 text-center">
+                <a 
+                  href="https://www.google.com/maps?q=11.011730665648821,79.82936000184947"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-blue-600 hover:text-blue-800"
+                >
+                  <MapPin className="w-5 h-5 mr-2" />
+                  Open in Google Maps
+                </a>
+              </div>
+            </div>
+          </section>
         </div>
-      </section>
-
-      {/* Service Times */}
-      <section id="services" className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12">Service Times</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            <ServiceCard
-              day="Monday - Sunday"
-              time="9:00 AM - 9:00 PM"
-              location="Main Sanctuary"
-            />
-            <ServiceCard
-              day="Wednesday"
-              time="7:00 PM"
-              location="Main Sanctuary"
-              service="Food Distribution"
-            />
-            <ServiceCard
-              day="Festival Time"
-              time="To Be Announced"
-              location="To Be Announced"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Festival Roadmap */}
-      <FestivalRoadmap />
-
-      {/* Album Slider */}
-      <AlbumSlider />
-
-      {/* Location Section */}
-      <section id="location" className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12">Find Us</h2>
-          <div className="relative w-full max-w-5xl mx-auto h-[300px] sm:h-[500px] rounded-lg overflow-hidden shadow-lg">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.833183606571!2d79.82677461482178!3d11.011883591949392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTHCsDAwJzQzLjEiTiA3OcKwNDknNDUuNiJF!5e0!3m2!1sen!2sin!4v1649713439805!5m2!1sen!2sin"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
-          </div>
-          <div className="mt-6 text-center">
-            <a 
-              href="https://www.google.com/maps?q=11.011730665648821,79.82936000184947"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center text-blue-600 hover:text-blue-800"
-            >
-              <MapPin className="w-5 h-5 mr-2" />
-              Open in Google Maps
-            </a>
-          </div>
-        </div>
-      </section>
+      )}
     </div>
   );
 }
