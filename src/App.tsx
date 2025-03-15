@@ -1,9 +1,10 @@
-// src/App.jsx
+// src/App.tsx
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import logoImage from "./Asset/jrs-logo.png";
 import georgeImage from "./Asset/george.jpg";
 import santiagoImage from './Asset/santiago.jpg';
+import years from './Asset/1376.png';
 import img1 from './Asset/1.jpg';
 import img2 from './Asset/2.jpg';
 import img3 from './Asset/3.jpg';
@@ -14,9 +15,12 @@ import img7 from './Asset/7.jpg';
 import img8 from './Asset/8.jpg';
 import img9 from './Asset/9.jpg';
 import img10 from './Asset/10.jpg';
-import { Calendar, Clock, MapPin, Youtube, Instagram, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Calendar, Clock, MapPin, Youtube, Instagram, ChevronLeft, ChevronRight, Menu, X } from 'lucide-react';
+import './index.css'; // Ensure Tailwind CSS is imported
 
 function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <nav className="bg-white shadow-lg fixed w-full z-30 top-0">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -27,11 +31,18 @@ function Navbar() {
               alt="Church Logo"
               className="h-12 w-auto object-contain"
             />
-            <span className="ml-3 text-xl font-bold text-gray-800">
+            <span className="ml-3 text-xl font-bold text-gray-800 hidden sm:block">
               Saint George Punitha Santhiyagapar Aalayam
             </span>
           </div>
-          <div className="flex items-center space-x-4">
+          {/* Hamburger Menu for Mobile */}
+          <div className="sm:hidden">
+            <button onClick={() => setIsOpen(!isOpen)} className="text-gray-600 hover:text-gray-900">
+              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
+          {/* Desktop Menu */}
+          <div className="hidden sm:flex items-center space-x-4">
             <a href="#home" className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
               Home
             </a>
@@ -52,12 +63,44 @@ function Navbar() {
             </a>
           </div>
         </div>
+        {/* Mobile Menu */}
+        {isOpen && (
+          <div className="sm:hidden bg-white shadow-lg">
+            <div className="flex flex-col space-y-2 px-4 py-2">
+              <a href="#home" className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium" onClick={() => setIsOpen(false)}>
+                Home
+              </a>
+              <a href="#videos" className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium" onClick={() => setIsOpen(false)}>
+                Videos
+              </a>
+              <a href="#album" className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium" onClick={() => setIsOpen(false)}>
+                Album
+              </a>
+              <a href="#saints" className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium" onClick={() => setIsOpen(false)}>
+                Saints
+              </a>
+              <a href="#services" className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium" onClick={() => setIsOpen(false)}>
+                Services
+              </a>
+              <a href="#location" className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium" onClick={() => setIsOpen(false)}>
+                Location
+              </a>
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   );
 }
 
-function ServiceCard({ day, time, location, service }) {
+interface ServiceCardProps {
+  day: string;
+  time: string;
+  location: string;
+  service?: string;
+}
+
+function ServiceCard({ day, time, location, service }: ServiceCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -121,7 +164,7 @@ function AlbumSlider() {
             <img
               src={images[currentIndex]}
               alt={`Church Image ${currentIndex + 1}`}
-              className="w-full h-[500px] object-cover"
+              className="w-full h-[300px] sm:h-[500px] object-cover"
             />
           </motion.div>
           
@@ -155,6 +198,29 @@ function AlbumSlider() {
   );
 }
 
+function SilverJubileeAnnouncement() {
+  return (
+    <section id="jubilee" className="py-8 bg-gradient-to-r from-blue-500 to-purple-600 text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+          Celebrating Our 25th Festival Silver Jubilee
+        </h2>
+        <p className="text-lg sm:text-xl mb-6 font-montserrat">
+          Join us as we mark <span className="font-bold text-yellow-300">25 years</span> of faith, community, and celebration at Saint George Punitha Santhiyagapar Aalayam. Stay tuned for more details on this momentous occasion!
+        </p>
+        {/* Updated 25th Anniversary Logo Size */}
+        <div className="mb-6">
+          <img
+            src={years}
+            alt="25th Anniversary Logo"
+            className="mx-auto w-40 h-40 sm:w-64 sm:h-64 object-contain"
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function App() {
   return (
     <div className="min-h-screen bg-gray-50 pt-16">
@@ -176,32 +242,32 @@ function App() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
-            className="text-center text-white"
+            className="text-center text-white px-4"
           >
             <img 
               src={logoImage}
               alt="Church Logo"
-              className="mx-auto mb-6 w-32 h-32 object-contain"
+              className="mx-auto mb-6 w-24 h-24 sm:w-32 sm:h-32 object-contain"
             />
-            <h1 className="text-5xl md:text-7xl font-bold mb-4">Saint George Punitha Santhiyagapar Aalayam</h1>
-            <p className="text-xl md:text-2xl mb-8">Join us in worship and community</p>
-            <div className="flex justify-center space-x-4">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-4">Saint George Punitha Santhiyagapar Aalayam</h1>
+            <p className="text-lg sm:text-xl md:text-2xl mb-8">Join us in worship and community</p>
+            <div className="flex justify-center space-x-4 flex-col sm:flex-row">
               <a 
                 href="https://www.youtube.com/@JohnabrakanJohnabrakan" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="flex items-center bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-full text-lg font-semibold transition-colors"
+                className="flex items-center bg-red-600 hover:bg-red-700 text-white px-4 py-2 sm:px-6 sm:py-3 rounded-full text-base sm:text-lg font-semibold transition-colors mb-2 sm:mb-0 sm:mr-2"
               >
-                <Youtube className="w-6 h-6 mr-2" />
+                <Youtube className="w-5 h-5 sm:w-6 sm:h-6 mr-2" />
                 Our Channel
               </a>
               <a 
                 href="https://www.instagram.com/jrs_network" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="flex items-center bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-full text-lg font-semibold transition-colors"
+                className="flex items-center bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 sm:px-6 sm:py-3 rounded-full text-base sm:text-lg font-semibold transition-colors"
               >
-                <Instagram className="w-6 h-6 mr-2" />
+                <Instagram className="w-5 h-5 sm:w-6 sm:h-6 mr-2" />
                 Follow Us
               </a>
             </div>
@@ -209,8 +275,11 @@ function App() {
         </div>
       </section>
 
-      {/* Featured Videos */}
-      <section id="videos" className="py-16 bg-white">
+      {/* Silver Jubilee Announcement */}
+      <SilverJubileeAnnouncement />
+
+      {/* Featured Videos - Hidden on Mobile */}
+      <section id="videos" className="py-16 bg-white hidden sm:block">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12">Featured Videos</h2>
           <div className="grid md:grid-cols-2 gap-8">
@@ -240,7 +309,7 @@ function App() {
       <section id="saints" className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12">Our Patron Saints</h2>
-          <div className="grid md:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-12">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -308,7 +377,7 @@ function App() {
       <section id="services" className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12">Service Times</h2>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             <ServiceCard
               day="Monday - Sunday"
               time="9:00 AM - 9:00 PM"
@@ -336,7 +405,7 @@ function App() {
       <section id="location" className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12">Find Us</h2>
-          <div className="relative w-full max-w-5xl mx-auto h-[500px] rounded-lg overflow-hidden shadow-lg">
+          <div className="relative w-full max-w-5xl mx-auto h-[300px] sm:h-[500px] rounded-lg overflow-hidden shadow-lg">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.833183606571!2d79.82677461482178!3d11.011883591949392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTHCsDAwJzQzLjEiTiA3OcKwNDknNDUuNiJF!5e0!3m2!1sen!2sin!4v1649713439805!5m2!1sen!2sin"
               width="100%"
